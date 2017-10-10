@@ -12,6 +12,22 @@
         <title>JSP Page</title>
     </head>
     <body>
-        <h1>Hello World!</h1>
+        <%
+            int num = 4;
+            
+            if(num==1){
+                
+                out.print("１です！");
+                
+            }else if(num==2){
+                
+                out.print("プログラミングキャンプ！");
+                
+            }else{
+                
+                out.print("その他です！");
+                
+            }
+        %>
     </body>
 </html>
