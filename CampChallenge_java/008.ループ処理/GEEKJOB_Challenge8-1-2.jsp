@@ -14,15 +14,15 @@
     <body>
         <%
             
-        String answer = "";
+            String answer = "";
 
-        //  Aを30個連結
-        for(int i=0;i<30;i++){
+            //  Aを30個連結
+            for(int i=0;i<30;i++){
             
             answer+="A";
             
-        }
-out.println(answer);
+            }
+        
         %>
     </body>
 </html>
