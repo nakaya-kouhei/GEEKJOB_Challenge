@@ -43,7 +43,8 @@ public class MyProfile extends HttpServlet {
         response.setContentType("text/html;charset=UTF-8");
         try (PrintWriter out = response.getWriter()) {
             
-            for(int i=0;i<10;i++){
+            //  メソッドを10回呼び出す
+            for(int i=1;i<=10;i++){
             
                 //  ユーザー定義メソッドの呼び出し
                 myprofile(out);
