@@ -4,6 +4,7 @@
     Author     : guest1Day
 --%>
 
+<%@page import="java.util.ArrayList"%>
 <%@page import="java.sql.*"%>
 <%@page import="javax.servlet.http.HttpSession" %>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
@@ -41,7 +42,8 @@
                      
             <!-- 入力フィールドは、セッションからのデータの有無で場合分け -->
             <!-- 名前を入力するテキストボックス -->                    　
-            <%  if(name == "null" || name.isEmpty()) { %>
+            <%  //nameが"null"か判定
+                if(name.equals("null")) { %>
             
                     氏名
                     <input type="text" name="name">　　入力して下さい<br><br>
@@ -61,7 +63,7 @@
         <%
             
             //  入力がない場合、データベースとは接続しない
-            if(name == "null" || name.isEmpty()) {
+            if(name.equals("null") || name.isEmpty()) {
                 
                 out.println("氏名が未入力です。<br>");
                 out.println("入力してください。<br>");
@@ -93,34 +95,40 @@
                         //  SQL文を実行　情報を取得
                         db_data = db_st.executeQuery();
                         
+                        //  データベースから取得した値を格納する変数
+                        int    id;
+                        String tel;
+                        int    age;
+                        String birthday;
+                        ArrayList<String> rows = new ArrayList<String>();
+
+                        //  取得した情報を表示　db_data内を一行づつ抽出
+                        while(db_data.next()) {
+
+                            id = db_data.getInt("profilesID");
+                            name = db_data.getString("name");
+                            tel = db_data.getString("tel");
+                            age = db_data.getInt("age");
+                            birthday = String.valueOf(db_data.getDate("birthday"));
+
+                            rows.add(id + "　　" + name + "　" + tel + "　" + age + "　 " + birthday + "<br><br>");
+
+                        }
+
                         //  条件に一致するデータが無い場合
-                        if(db_data.wasNull()) {
-                            
+                        if(rows.isEmpty()) {
+
                             out.println("合致するデータがありません。<br>");
-                            
-                        //  データがある場合
+
+                        //  条件に一致するデータが有る場合    
                         } else {
-                            
-                            //  データベースから取得した値を格納する変数
-                            int    id;
-                            String tel;
-                            int    age;
-                            String birthday;
 
                             out.println("データベースの情報を表示します。<br><br>");
-
-                            //  取得した情報を表示　db_data内を一行づつ抽出
-                            while(db_data.next()) {
-
-                                id = db_data.getInt("profilesID");
-                                name = db_data.getString("name");
-                                tel = db_data.getString("tel");
-                                age = db_data.getInt("age");
-                                birthday = String.valueOf(db_data.getDate("birthday"));
-
-                                out.println("ID　　" + "　氏名 　　" + "　　電話番号　　" + " 年齢　" + "生年月日" + "<br>");
-                                out.println(id + "　　" + name + "　" + tel + "　" + age + "　 " + birthday + "<br><br>");
-
+                            out.println("ID　　" + "　氏名 　　" + "　　電話番号　　" + " 年齢　" + "生年月日" + "<br>");
+                            
+                            for(String data : rows) {
+                                
+                                out.println(data);
                             }
                         }
                         
