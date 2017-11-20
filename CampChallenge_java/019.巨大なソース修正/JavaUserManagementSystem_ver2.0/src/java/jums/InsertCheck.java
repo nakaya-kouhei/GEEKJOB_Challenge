@@ -2,7 +2,10 @@
 package jums;
 
 import java.sql.SQLException;
+import java.text.ParseException;
 import java.util.List;
+import java.util.Date;
+import java.text.SimpleDateFormat;
 
 /**
  * 入力された値が適切かチェックするためのクラス。
@@ -43,11 +46,18 @@ public class InsertCheck {
      */
     public Boolean dateCheck(UserDataBeans udb){
         
-        boolean date = true;
-        int year = udb.getYear();
-        int month = udb.getMonth();
-        int day = udb.getDay();
-        if(year != 0 && month != 0 && day != 0){
+        try{
+            SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+            String year = String.valueOf(udb.getYear());
+            String month = String.valueOf(udb.getMonth());
+            String day = String.valueOf(udb.getDay());
+            String date = year + "-" + month + "-" + day;
+            sdf.setLenient(false);
+            sdf.parse(date);
+        }catch(ParseException e){
+            return false;
+        }
+        /*if(year != 0 && month != 0 && day != 0){
             if(month == 2 && day > 28){
                 if(!((year % 4 == 0 && year % 100 != 0 || year % 400 == 0) && day < 30)) {
                     date = false;
@@ -61,8 +71,8 @@ public class InsertCheck {
             }else if(month == 11 && day > 30){
                 date = false;
             }
-        }
-        return date;
+        }*/
+        return true;
     }
     
     /**

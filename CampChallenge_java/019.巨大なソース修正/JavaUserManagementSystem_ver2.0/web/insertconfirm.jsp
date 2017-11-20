@@ -19,7 +19,7 @@
         <title>JUMS登録確認画面</title>
     </head>
     <body>
-    <% if(chkList.size()==0 && datecheck && tellcheck){ %>
+    <% if(chkList.size() == 0 && datecheck && tellcheck){ %>
         <h1>登録確認</h1>
         名前:<%= udb.getName()%><br>
         生年月日:<%= udb.getYear()+"年"+udb.getMonth()+"月"+udb.getDay()+"日"%><br>

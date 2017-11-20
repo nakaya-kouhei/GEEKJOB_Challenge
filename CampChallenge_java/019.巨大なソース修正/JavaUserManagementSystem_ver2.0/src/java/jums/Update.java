@@ -1,7 +1,6 @@
 package jums;
 
 import java.io.IOException;
-import java.io.PrintWriter;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
@@ -44,10 +43,13 @@ public class Update extends HttpServlet {
             UserDataDTO udd = (UserDataDTO)session.getAttribute("resultData");
             UserDataBeans udb = new UserDataBeans();
             udb.setUserDataBeans(udd);
-            
-            //ユーザー情報をsessionに格納
-            session.setAttribute("udb", udb);
-            System.out.println("Session updated!!");
+            String re = (String)session.getAttribute("re");
+            //遷移元を判定
+            if(re == null || !re.equals("update")){
+                //ユーザー情報をsessionに格納
+                session.setAttribute("udb", udb);
+                System.out.println("Session updated!!");
+            }
 
             request.getRequestDispatcher("/update.jsp").forward(request, response);
         }catch(Exception e){

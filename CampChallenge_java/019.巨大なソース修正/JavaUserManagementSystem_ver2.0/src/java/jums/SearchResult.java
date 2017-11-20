@@ -52,7 +52,7 @@ public class SearchResult extends HttpServlet {
                 //フォームの入力情報を保持
                 session.setAttribute("searchdata", udb);
                 flag = true;
-            }else if(re != null && re.equals("yes")){
+            }else if(re != null && re.equals("resultdetail")){
                 //保持されたフォームの入力情報を取得して、JavaBeansに格納
                 udb = (UserDataBeans)session.getAttribute("searchdata");
                 session.setAttribute(re, "no");

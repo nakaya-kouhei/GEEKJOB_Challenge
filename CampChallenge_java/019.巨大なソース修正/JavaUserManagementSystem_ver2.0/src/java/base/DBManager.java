@@ -13,7 +13,7 @@ public class DBManager {
         try{
             Class.forName("com.mysql.jdbc.Driver");
             //セキュリティ上パスワードは伏字
-            con = DriverManager.getConnection("jdbc:mysql://localhost:3306/challenge_db","NAKAYA","****");
+            con = DriverManager.getConnection("jdbc:mysql://localhost:3306/challenge_db","NAKAYA","teranoide0");
             System.out.println("DBConnected!!");
             return con;
         }catch(ClassNotFoundException e){

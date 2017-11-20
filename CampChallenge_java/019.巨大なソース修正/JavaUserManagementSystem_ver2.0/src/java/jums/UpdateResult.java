@@ -48,18 +48,26 @@ public class UpdateResult extends HttpServlet {
             udb.setType(request.getParameter("type"));
             udb.setTell(request.getParameter("tell"));
             udb.setComment(request.getParameter("comment"));
-
-            //DTOオブジェクトにマッピング。DB専用のパラメータに変換
-            UserDataDTO resultData = (UserDataDTO)session.getAttribute("resultData");
-            udb.UD2DTOMapping(resultData);
-
-            //DBをアップデート
-            UserDataDAO.getInstance().update(resultData);
             
+            //入力フォームに不足や問題があれば再入力を促す
+            boolean datecheck = InsertCheck.getInstance().dateCheck(udb);
+            boolean tellcheck = InsertCheck.getInstance().tellCheck(udb);
+            if(udb.chkproperties().isEmpty() && datecheck && tellcheck){
+                //DTOオブジェクトにマッピング。DB専用のパラメータに変換
+                UserDataDTO resultData = (UserDataDTO)session.getAttribute("resultData");
+                udb.UD2DTOMapping(resultData);
+                //DBをアップデート
+                UserDataDAO.getInstance().update(resultData);
+                //詳細情報画面へ渡す情報
+                request.setAttribute("id", resultData.getUserID());
+                session.setAttribute("re", "resultdetail");
+            }else{
+                //更新入力画面へ
+                session.setAttribute("re", "update");
+            }
+
             //セッション上のUserDataBeans値を更新
             session.setAttribute("udb", udb);
-            session.setAttribute("re", "yes");
-            request.setAttribute("id", resultData.getUserID());
             System.out.println("Session updated!!");
             
             request.getRequestDispatcher("/updateresult.jsp").forward(request, response);

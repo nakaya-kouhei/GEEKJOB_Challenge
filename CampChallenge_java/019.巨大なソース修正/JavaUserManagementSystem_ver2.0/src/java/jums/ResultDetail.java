@@ -39,11 +39,12 @@ public class ResultDetail extends HttpServlet {
 
             //DTOオブジェクトにマッピング。DB専用のパラメータに変換
             UserDataDTO searchData = new UserDataDTO();
-            //ユーザーIDを取得
+            //ユーザーIDを取得しDBを検索
             searchData.setUserID(Integer.valueOf(request.getParameter("id")));
-
             UserDataDTO resultData = UserDataDAO.getInstance().searchByID(searchData);
             session.setAttribute("resultData", resultData);
+            //更新画面からの情報をリセット
+            session.setAttribute("re", "no");
             System.out.println("Session updated!!");
 
             request.getRequestDispatcher("/resultdetail.jsp").forward(request, response);
